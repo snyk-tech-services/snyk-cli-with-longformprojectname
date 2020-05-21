@@ -27,6 +27,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./dist/
+      - run: ls && ls dist/  
       - run:
           name: "Publish Release on GitHub"
           command: | 
