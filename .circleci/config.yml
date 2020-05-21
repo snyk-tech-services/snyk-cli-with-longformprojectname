@@ -54,7 +54,7 @@ workflows:
               only:
                   - master
       - publish-github-release:
-          context: snyk-gcp-function-admin-and-gcr-readonly
+          context: SNYK
           requires:
             - build-and-patch
           filters:
