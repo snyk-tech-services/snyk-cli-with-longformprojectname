@@ -13,6 +13,7 @@ jobs:
       - run: cd snyk && npm install --save-dev pkg
       - run: cd snyk && npm install
       - run: cd snyk &&  git am --signoff < ../longformprojectname.patch
+      - run: npm run build
       - run: cd snyk && npx pkg .
       - run: cd snyk && git describe --tags > VERSION
       - persist_to_workspace:
