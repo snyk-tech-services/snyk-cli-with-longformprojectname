@@ -1,21 +1,20 @@
 version: 2.1
 jobs:
   build-and-patch:
-      docker:
-        # specify the version
-        - image: circleci/node:latest
+    docker:
+    # specify the version
+      - image: circleci/node:latest
 
-      steps:
-        - git clone https://github.com/snyk/snyk
-        - run: 
-        - run: npm install
-        - run: pkg
-        - run: git describe --tags > VERSION
-        - persist_to_workspace:
-            root: .
-            paths:
-              - dist/*
-              - VERSION
+    steps:
+      - git clone https://github.com/snyk/snyk
+      - run: npm install
+      - run: pkg
+      - run: git describe --tags > VERSION
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist/*
+            - VERSION
 
   publish-github-release:
     docker:
