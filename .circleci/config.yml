@@ -9,7 +9,8 @@ jobs:
       - run: git clone https://github.com/snyk/snyk
       - run: cd snyk && npm install --save-dev pkg
       - run: cd snyk && npm install
-      - run: cd snyk && npx pkg .
+      - run: cd snyk && npx pkg . && ls -l
+      - run: cd snyk/dist && ls -l
       - run: cd snyk && git describe --tags > VERSION
       - persist_to_workspace:
           root: .
@@ -53,6 +54,7 @@ workflows:
               only:
                   - master
       - publish-github-release:
+          context: snyk-gcp-function-admin-and-gcr-readonly
           requires:
             - build-and-patch
           filters:
