@@ -6,7 +6,7 @@ jobs:
       - image: circleci/node:latest
 
     steps:
-      - git clone https://github.com/snyk/snyk
+      - run: git clone https://github.com/snyk/snyk
       - run: npm install
       - run: pkg
       - run: git describe --tags > VERSION
