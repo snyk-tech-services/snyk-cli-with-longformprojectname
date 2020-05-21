@@ -7,6 +7,8 @@ jobs:
 
     steps:
       - checkout
+      - run: git config --global user.email "antoine@snyk.io"
+      - run: git config --global user.name "Snyk Tech Services"
       - run: git clone https://github.com/snyk/snyk
       - run: cd snyk && npm install --save-dev pkg
       - run: cd snyk && npm install
