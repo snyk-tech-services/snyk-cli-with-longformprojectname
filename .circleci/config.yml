@@ -43,7 +43,7 @@ workflows:
               only:
                 - master
     jobs:
-      - build-test-monitor
+      - build-and-patch
   build-and-patch:
     jobs:
       - build-and-patch:
