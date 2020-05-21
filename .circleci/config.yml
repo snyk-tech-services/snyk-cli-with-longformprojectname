@@ -1,21 +1,27 @@
 version: 2.1
 jobs:
   build-and-patch:
-      docker:
-        # specify the version
-        - image: circleci/node:latest
+    docker:
+    # specify the version
+      - image: circleci/node:latest
 
-      steps:
-        - git clone https://github.com/snyk/snyk
-        - run: 
-        - run: npm install
-        - run: pkg
-        - run: git describe --tags > VERSION
-        - persist_to_workspace:
-            root: .
-            paths:
-              - dist/*
-              - VERSION
+    steps:
+      - checkout
+      - run: git config --global user.email "antoine@snyk.io"
+      - run: git config --global user.name "Snyk Tech Services"
+      - run: git clone https://github.com/snyk/snyk
+      - run: cd snyk && git describe --tags > VERSION
+      - run: cd snyk && TAG=$(git describe --tags) && git checkout ${TAG}
+      - run: cd snyk && npm install --save-dev pkg
+      - run: cd snyk && npm install
+      - run: cd snyk &&  git am --signoff < ../longformprojectname.patch
+      - run: cd snyk && npm run build
+      - run: cd snyk && npx pkg .
+      - persist_to_workspace:
+          root: .
+          paths:
+            - snyk/snyk-*
+            - snyk/VERSION
 
   publish-github-release:
     docker:
@@ -27,11 +33,12 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
+      - run: ls && ls snyk/  
       - run:
           name: "Publish Release on GitHub"
           command: | 
-            VERSION=$(cat VERSION)
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${VERSION} dist/
+            VERSION=$(cat snyk/VERSION)
+            ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${VERSION} snyk/
 
 workflows:
   version: 2.1
@@ -44,7 +51,9 @@ workflows:
               only:
                 - master
     jobs:
-      - build-test-monitor
+      - build-and-patch
+      - publish-github-release:
+           context: SNYK
   build-and-patch:
     jobs:
       - build-and-patch:
@@ -53,6 +62,7 @@ workflows:
               only:
                   - master
       - publish-github-release:
+          context: SNYK
           requires:
             - build-and-patch
           filters:
