@@ -32,7 +32,7 @@ jobs:
           name: "Publish Release on GitHub"
           command: | 
             VERSION=$(cat snyk/VERSION)
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${VERSION} snyk/
+            ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${VERSION} snyk/
 
 workflows:
   version: 2.1
