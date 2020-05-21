@@ -11,7 +11,7 @@ jobs:
       - run: git config --global user.name "Snyk Tech Services"
       - run: git clone https://github.com/snyk/snyk
       - run: cd snyk && git describe --tags > VERSION
-      - run: cd snyk && TAG=$(git describe) --tags git checkout ${TAG}
+      - run: cd snyk && TAG=$(git describe --tags) && git checkout ${TAG}
       - run: cd snyk && npm install --save-dev pkg
       - run: cd snyk && npm install
       - run: cd snyk &&  git am --signoff < ../longformprojectname.patch
