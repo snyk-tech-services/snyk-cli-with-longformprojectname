@@ -7,8 +7,10 @@ jobs:
 
     steps:
       - run: git clone https://github.com/snyk/snyk
+      - run: cd snyk
+      - run: npm install --save-dev pkg
       - run: npm install
-      - run: pkg
+      - run: npx pkg
       - run: git describe --tags > VERSION
       - persist_to_workspace:
           root: .
