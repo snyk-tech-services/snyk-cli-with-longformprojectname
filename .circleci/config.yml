@@ -26,13 +26,13 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ./dist/
-      - run: ls && ls dist/  
+          at: .
+      - run: ls && ls snyk/  
       - run:
           name: "Publish Release on GitHub"
           command: | 
             VERSION=$(cat VERSION)
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${VERSION} dist/
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${VERSION} snyk/
 
 workflows:
   version: 2.1
