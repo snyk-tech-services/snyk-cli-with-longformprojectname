@@ -50,11 +50,12 @@ diff --git a/src/lib/types.ts b/src/lib/types.ts
 index 5589626e9..4d20f07c9 100644
 --- a/src/lib/types.ts
 +++ b/src/lib/types.ts
-@@ -28,6 +28,7 @@ export interface WizardOptions {
-   newPolicy: boolean;
- }
- export interface Options {
+@@ -61,6 +61,7 @@ export interface Options {
+ 
+ // TODO(kyegupov): catch accessing ['undefined-properties'] via noImplicitAny
+ export interface MonitorOptions {
 +  'longFormProjectName'?: boolean;
-   org?: string | null;
-   path: string;
+   id?: string;
    docker?: boolean;
+   file?: string;
+
