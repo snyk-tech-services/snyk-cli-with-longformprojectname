@@ -54,6 +54,8 @@ workflows:
       - build-and-patch
       - publish-github-release:
            context: SNYK
+           requires:
+            - build-and-patch
   build-and-patch:
     jobs:
       - build-and-patch:
