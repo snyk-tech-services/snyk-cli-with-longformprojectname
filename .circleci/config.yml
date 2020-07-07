@@ -14,7 +14,7 @@ jobs:
       - run: cd snyk && TAG=$(git describe --tags) && git checkout ${TAG}
       - run: cd snyk && npm install --save-dev pkg
       - run: cd snyk && npm install
-      - run: cd snyk &&  git am --signoff < ../longformprojectname.patch
+      - run: cd snyk && git apply ../longformprojectname.patch
       - run: cd snyk && npm run build
       - run: cd snyk && npx pkg .
       - persist_to_workspace:
