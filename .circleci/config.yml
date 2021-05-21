@@ -3,16 +3,20 @@ jobs:
   build-and-patch:
     docker:
     # specify the version
-      - image: circleci/node:lts
+      - image: circleci/node:14.15.4
 
     steps:
       - checkout
+      - run:
+          name: Install npm@7
+          command: |
+            sudo npm install -g npm@7
       - run: git config --global user.email "antoine@snyk.io"
       - run: git config --global user.name "Snyk Tech Services"
       - run: git clone https://github.com/snyk/snyk
       - run: cd snyk && git describe --tags > VERSION
       - run: cd snyk && TAG=$(git describe --tags) && git checkout ${TAG}
-      - run: cd snyk && npm install --save-dev pkg
+      - run: cd snyk && npm install --save-dev pkg --legacy-peer-deps
       - run: cd snyk && npm install
       #- run: cd snyk && git apply ../longformprojectname.patch
       - run: cd snyk && ../applyChangesInFiles.sh
