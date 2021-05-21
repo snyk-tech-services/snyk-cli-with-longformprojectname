@@ -3,7 +3,7 @@ jobs:
   build-and-patch:
     docker:
     # specify the version
-      - image: circleci/node:lts
+      - image: circleci/node:latest
 
     steps:
       - checkout
