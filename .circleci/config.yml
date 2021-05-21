@@ -3,7 +3,7 @@ jobs:
   build-and-patch:
     docker:
     # specify the version
-      - image: circleci/node:latest
+      - image: circleci/node:12.18.0
 
     steps:
       - checkout
