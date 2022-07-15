@@ -1,5 +1,10 @@
+[![Not Maintained](https://img.shields.io/badge/Maintenance%20Level-Not%20Maintained-yellow.svg)](https://gist.github.com/cheerfulstoic/d107229326a01ff0f333a1d3476e068d)
+
+**This repository is not in active development and critical bug fixes only will be considered.**
+
+
 # Special Snyk CLI version
-It contains --longformprojectname option, allowing project versions to be appended to the project name
+It contains `--longFormProjectName` option, allowing project versions to be appended to the project name
 
 # Disclaimer
 Not officially supported version, addressing very specific needs primarily around maven projects.
