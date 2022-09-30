@@ -39,36 +39,29 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: ls && ls snyk/  
+      - run: ls && ls snyk/
       - run:
           name: "Publish Release on GitHub"
-          command: | 
+          command: |
             VERSION=$(cat snyk/VERSION)
             ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${VERSION} snyk/
 
 workflows:
   version: 2.1
   nightly:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
     jobs:
       - build-and-patch
       - publish-github-release:
            context: SNYK
            requires:
             - build-and-patch
+    when:
+      and:
+        - equal: [ Scheduled, << pipeline.trigger_source >> ]
+        - equal: [ "Nightly build", << pipeline.schedule.name >> ]
   build-and-patch:
     jobs:
-      - build-and-patch:
-          filters:
-            branches:
-              only:
-                  - master
+      - build-and-patch
       - publish-github-release:
           context: SNYK
           requires:
